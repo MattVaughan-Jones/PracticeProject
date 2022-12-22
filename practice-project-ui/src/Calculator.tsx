@@ -14,6 +14,7 @@ function App() {
     <div>
       <header>
         <p>Calculator Component</p>
+        <p>{data}</p>
       </header>
       <body>
       </body>
