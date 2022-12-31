@@ -1,17 +1,18 @@
-//requires
-import * as express from 'express';
-import {routes} from './routes';
+import express, { Express, Request, Response } from 'express';
+import dotenv from 'dotenv';
+import { routes } from './routes';
 
-const PORT = process.env.PORT || 3001;
-const app = express();
+dotenv.config();
 
-//use the /calculate.ts file to handle endpoints starting with /calculate
+const app: Express = express();
+const port = process.env.PORT;
+
 app.use("/", routes);
 
-app.get("/", (req, res) => {
-  res.send("<h1>first middleware: Hello world!</h1>");
+app.get('/', (req: Request, res: Response) => {
+  res.send('Express + TypeScript Server');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+app.listen(port, () => {
+  console.log(`[server]: Server is running at http://localhost:${port}`);
 });

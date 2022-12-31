@@ -1,5 +1,5 @@
-import {Router} from 'express';
-import { calculateRoute } from './calculate';
+import { Router, Request, Response } from 'express';
+import { calculateRoute } from './calculateRoutes';
 
 export const routes = Router();
 
