@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-import { calculatorOperation } from "../types";
 
 export const calculateRoute = Router();
 
@@ -9,26 +8,30 @@ calculateRoute.get("/calculate", (req: Request, res: Response, next) => {
 
 calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
 
+  type calculatorOperation = '*' | '/' | '+' | '-';
+
   interface Calculate {
     firstNumber: number,
     secondNumber: number,
     operation: calculatorOperation,
   };
 
-  interface Output {
-    output: Number
-  };
-
   const input: Calculate = {
-    firstNumber: req.firstNumber,
-    secondNumber: req.firstNumber,
-    operation: req.operation,
+    firstNumber: req.body.firstNumber,
+    secondNumber: req.body.firstNumber,
+    operation: req.body.operation,
   };
 
-  const output = (input.firstNumber, input.operation, input.secondNumber) => {
-    //calclator code here
-    return 0;
+  let calculate = (firstNumber: number, operation: calculatorOperation, secondNumber: number): number => {
+    switch (operation) {
+      case '*': return firstNumber * secondNumber;
+      case '/': return firstNumber / secondNumber;
+      case '+': return firstNumber + secondNumber;
+      case '-': return firstNumber - secondNumber;
+    }
   };
+
+  const output: Number = calculate(input.firstNumber, input.operation, input.secondNumber);
 
   res.send(output);
 
