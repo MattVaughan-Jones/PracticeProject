@@ -2,10 +2,6 @@ import { Router, Request, Response } from "express";
 
 export const calculateRoute = Router();
 
-calculateRoute.get("/calculate", (req: Request, res: Response, next) => {
-  res.send("this is the /calculate route");
-});
-
 calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
 
   type calculatorOperation = '*' | '/' | '+' | '-';
@@ -26,13 +22,13 @@ calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
     switch (operation) {
       case '*': return firstNumber * secondNumber;
       case '/': return firstNumber / secondNumber;
-      case '+': return firstNumber + secondNumber;
+      case '+': return (+firstNumber) + (+secondNumber);
       case '-': return firstNumber - secondNumber;
     }
   };
 
   const output: Number = calculate(input.firstNumber, input.operation, input.secondNumber);
 
-  res.send(output);
+  res.end(JSON.stringify(output));
 
 });
