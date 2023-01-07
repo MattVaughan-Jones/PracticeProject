@@ -7,8 +7,14 @@ function App() {
 
   const [data, setData] = React.useState(null);
 
+  enum Operations {
+    Add = "+",
+    Subtract = "-",
+    Multiply = "*",
+    Divide = "/"
+  };
+
   async function calculate(event: React.FormEvent<HTMLFormElement>) {
-    console.log(event); 
     event.preventDefault();
 
     try {
@@ -35,10 +41,10 @@ function App() {
           <label>first Number : <input name="firstNumber" type="number" /></label>
           <label>Operation : 
             <select name="operation">
-              <option value="*">Multiply</option>
-              <option value="/">divide</option>
-              <option value="+">Add</option>
-              <option value="-">subtract</option>
+              <option value={ Operations.Multiply }>Multiply</option>
+              <option value={ Operations.Divide }>divide</option>
+              <option value={ Operations.Add }>Add</option>
+              <option value={ Operations.Subtract }>subtract</option>
             </select>
           </label>
           <label>second Number : <input name="secondNumber" type="number" /></label>
@@ -50,3 +56,4 @@ function App() {
 }
 
 export default App;
+
