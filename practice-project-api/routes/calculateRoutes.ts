@@ -4,30 +4,35 @@ export const calculateRoute = Router();
 
 calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
 
-  type calculatorOperation = '*' | '/' | '+' | '-';
+  enum calculatorOperation {
+    Multiply = '*',
+    Divide = '/',
+    Add = '+',
+    Subtract = '-'
+  }
 
   interface Calculate {
-    firstNumber: number,
-    secondNumber: number,
+    firstValue: number,
+    secondValue: number,
     operation: calculatorOperation,
   };
 
   const input: Calculate = {
-    firstNumber: req.body.firstNumber,
-    secondNumber: req.body.firstNumber,
+    firstValue: req.body.firstValue,
+    secondValue: req.body.secondValue,
     operation: req.body.operation,
   };
 
-  let calculate = (firstNumber: number, operation: calculatorOperation, secondNumber: number): number => {
+  let calculate = (firstValue: number, operation: calculatorOperation, secondValue: number): number => {
     switch (operation) {
-      case '*': return firstNumber * secondNumber;
-      case '/': return firstNumber / secondNumber;
-      case '+': return (+firstNumber) + (+secondNumber);
-      case '-': return firstNumber - secondNumber;
+      case calculatorOperation.Multiply: return firstValue * secondValue;
+      case calculatorOperation.Divide: return firstValue / secondValue;
+      case calculatorOperation.Add: return (+firstValue) + (+secondValue);
+      case calculatorOperation.Subtract: return firstValue - secondValue;
     }
   };
 
-  const output: Number = calculate(input.firstNumber, input.operation, input.secondNumber);
+  const output: Number = calculate(input.firstValue, input.operation, input.secondValue);
 
   res.end(JSON.stringify(output));
 
