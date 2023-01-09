@@ -1,7 +1,10 @@
 import * as React from "react";
 import axios from 'axios';
+import dotenv from 'dotenv';
 
-const baseURL = "http://localhost:8000";
+dotenv.config();
+
+const baseURL = process.env.BASE_URL;
 
 function App() {
 
@@ -19,9 +22,9 @@ function App() {
 
     try {
       axios.post(`${baseURL}/calculate`, {
-        firstNumber: (event.target as HTMLFormElement).firstNumber.value,
+        firstValue: (event.target as HTMLFormElement).firstValue.value,
         operation: (event.target as HTMLFormElement).operation.value,
-        secondNumber: (event.target as HTMLFormElement).secondNumber.value
+        secondValue: (event.target as HTMLFormElement).secondValue.value
       })
       .then((response) => {
         setData(response.data);
@@ -38,7 +41,7 @@ function App() {
         <p>Result: {data}</p>
       </header>
         <form onSubmit={calculate}>
-          <label>first Number : <input name="firstNumber" type="number" /></label>
+          <label>first Number : <input name="firstValue" type="number" /></label>
           <label>Operation : 
             <select name="operation">
               <option value={ Operations.Multiply }>Multiply</option>
@@ -47,7 +50,7 @@ function App() {
               <option value={ Operations.Subtract }>subtract</option>
             </select>
           </label>
-          <label>second Number : <input name="secondNumber" type="number" /></label>
+          <label>second Number : <input name="secondValue" type="number" /></label>
           <button type="submit">Submit</button>
         </form>
     </div>
