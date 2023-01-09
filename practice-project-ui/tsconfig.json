@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "lib": [
+      "dom",
+      "ES5"
+    ],
     "outDir": "./dist/",
     "noImplicitAny": true,
     "module": "es6",
@@ -7,5 +11,6 @@
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",
+    "esModuleInterop": true,
   }
 }
