@@ -36,6 +36,6 @@ calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
     }
   }
 
-  res.send(JSON.stringify(output));
+  res.send(output);
 
 });
