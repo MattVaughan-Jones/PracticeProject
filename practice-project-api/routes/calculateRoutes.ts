@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 
 export const calculateRoute = Router();
 
-enum calculatorOperation {
+enum CalculatorOperation {
   Multiply = '*',
   Divide = '/',
   Add = '+',
@@ -18,19 +18,19 @@ calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
   let output;
 
   switch (operation) {
-    case calculatorOperation.Multiply: {
+    case CalculatorOperation.Multiply: {
       output = { result: firstValue * secondValue }
       break;
     }
-    case calculatorOperation.Divide: {
+    case CalculatorOperation.Divide: {
       output = { result: firstValue / secondValue }
       break;
     }
-    case calculatorOperation.Add: {
-      output = { result: (+firstValue) + (+secondValue) }
+    case CalculatorOperation.Add: {
+      output = { result: firstValue + secondValue }
       break;
     }
-    case calculatorOperation.Subtract: {
+    case CalculatorOperation.Subtract: {
       output = { result: firstValue - secondValue }
       break;
     }
