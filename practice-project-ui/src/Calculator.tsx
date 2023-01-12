@@ -46,10 +46,10 @@ function App() {
           <label>first Number : <input name="firstValue" type="number" /></label>
           <label>Operation : 
             <select name="operation">
-              <option value={ Operations.Multiply }>Multiply</option>
-              <option value={ Operations.Divide }>divide</option>
-              <option value={ Operations.Add }>Add</option>
-              <option value={ Operations.Subtract }>subtract</option>
+              <option value={ Operations.Multiply }>{ Operations.Multiply }</option>
+              <option value={ Operations.Divide }>{ Operations.Divide }</option>
+              <option value={ Operations.Add }>{ Operations.Add }</option>
+              <option value={ Operations.Subtract }>{ Operations.Subtract }</option>
             </select>
           </label>
           <label>second Number : <input name="secondValue" type="number" /></label>
