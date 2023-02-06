@@ -21,9 +21,9 @@ function App() {
 
     try {
       axios.post(`${baseURL}/calculate`, {
-        firstValue: (event.target as HTMLFormElement).firstValue.value,
+        firstValue: (event.target as HTMLFormElement).firstValue.value as number,
         operation: (event.target as HTMLFormElement).operation.value,
-        secondValue: (event.target as HTMLFormElement).secondValue.value
+        secondValue: (event.target as HTMLFormElement).secondValue.value as number
       })
       .then((response) => {
         setData(response.data.result);
