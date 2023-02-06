@@ -1,10 +1,8 @@
 import * as React from "react";
-// import axios from 'axios';
-// import dotenv from 'dotenv';
+import axios from 'axios';
 
-// dotenv.config();
 
-// const baseURL = process.env.BASE_URL;
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 enum Operations {
   Add = "+",
@@ -15,34 +13,33 @@ enum Operations {
 
 function App() {
 
-  // const [data, setData] = React.useState(null);
+  const [data, setData] = React.useState(null);
 
-  // async function calculate(event: React.FormEvent<HTMLFormElement>) {
+  async function calculate(event: React.FormEvent<HTMLFormElement>) {
     
-  //   event.preventDefault();
+    event.preventDefault();
 
-  //   try {
-  //     axios.post(`${baseURL}/calculate`, {
-  //       firstValue: (event.target as HTMLFormElement).firstValue.value,
-  //       operation: (event.target as HTMLFormElement).operation.value,
-  //       secondValue: (event.target as HTMLFormElement).secondValue.value
-  //     })
-  //     .then((response) => {
-  //       setData(response.data);
-  //     });
-  //   } catch (error) {
-  //     console.log(error.response);
-  //   }
-  // }
+    try {
+      axios.post(`${baseURL}/calculate`, {
+        firstValue: (event.target as HTMLFormElement).firstValue.value,
+        operation: (event.target as HTMLFormElement).operation.value,
+        secondValue: (event.target as HTMLFormElement).secondValue.value
+      })
+      .then((response) => {
+        setData(response.data.result);
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
 
   return (
     <div>
       <header>
         <p>Calculator Component</p>
-        {/* <p>Result: {data}</p> */}
+        <p>Result: {data}</p>
       </header>
-        {/* <form onSubmit={calculate}> */}
-        <form>
+        <form onSubmit={calculate}>
           <label>first Number : <input name="firstValue" type="number" /></label>
           <label>Operation : 
             <select name="operation">
