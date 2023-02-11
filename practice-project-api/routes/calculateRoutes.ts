@@ -15,14 +15,11 @@ calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
   const secondValue = req.body.inputs.secondValue;
   const operation = req.body.operation;
 
-  console.log(req);
-
   let output;
 
   switch (operation) {
     case CalculatorOperation.Multiply: {
       output = firstValue * secondValue
-      console.log(firstValue, secondValue)
       break;
     }
     case CalculatorOperation.Divide: {
@@ -38,8 +35,6 @@ calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
       break;
     }
   }
-
-  console.log(output);
 
   res.send({result: output});
 
