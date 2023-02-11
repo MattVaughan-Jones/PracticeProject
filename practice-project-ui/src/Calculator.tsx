@@ -2,6 +2,7 @@ import * as React from "react";
 import axios from 'axios';
 import { useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import dotenv from 'dotenv';
 
 
 const baseURL = process.env.REACT_APP_BASE_URL;
