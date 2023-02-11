@@ -11,31 +11,31 @@ enum CalculatorOperation {
 
 calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
 
-  const firstValue = req.body.firstValue;
-  const secondValue = req.body.secondValue;
+  const firstValue = req.body.inputs.firstValue;
+  const secondValue = req.body.inputs.secondValue;
   const operation = req.body.operation;
 
   let output;
 
   switch (operation) {
     case CalculatorOperation.Multiply: {
-      output = { result: firstValue * secondValue }
+      output = firstValue * secondValue
       break;
     }
     case CalculatorOperation.Divide: {
-      output = { result: firstValue / secondValue }
+      output = firstValue / secondValue
       break;
     }
     case CalculatorOperation.Add: {
-      output = { result: firstValue + secondValue }
+      output = firstValue + secondValue
       break;
     }
     case CalculatorOperation.Subtract: {
-      output = { result: firstValue - secondValue }
+      output = firstValue - secondValue
       break;
     }
   }
 
-  res.send(output);
+  res.send({result: output});
 
 });

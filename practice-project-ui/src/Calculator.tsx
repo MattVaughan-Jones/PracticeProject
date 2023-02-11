@@ -1,62 +1,83 @@
 import * as React from "react";
 import axios from 'axios';
-// import dotenv from 'dotenv';
+import { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import dotenv from 'dotenv';
 
-// dotenv.config();
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
-enum Operations {
+enum Operation {
   Add = "+",
   Subtract = "-",
   Multiply = "*",
   Divide = "/"
 };
 
-function App() {
+type Inputs = {
+  firstValue: number,
+  secondValue: number
+}
 
-  const [data, setData] = React.useState(null);
+type Calculation = {
+  operation: Operation,
+  inputs: Inputs
+}
 
-  async function calculate(event: React.FormEvent<HTMLFormElement>) {
+function Calculator() {
+
+  const [result, setResult] = React.useState(null);
+  const [inputs, setInputs] = useState<Inputs>({firstValue: 0, secondValue: 0});
+
+  async function calculate(event: any) {
     
     event.preventDefault();
 
+    const calculation: Calculation = {inputs: inputs, operation: event.target.operation.value};
+
     try {
-      axios.post(`${baseURL}/calculate`, {
-        firstValue: (event.target as HTMLFormElement).firstValue.value,
-        operation: (event.target as HTMLFormElement).operation.value,
-        secondValue: (event.target as HTMLFormElement).secondValue.value
-      })
+      axios.post(`${baseURL}/calculate`,
+        calculation
+      )
       .then((response) => {
-        setData(response.data.result);
+        setResult(response.data.result);
       });
     } catch (error) {
       console.log(error.response);
     }
   }
-
-  return (
-    <div>
-      <header>
-        <p>Calculator Component</p>
-        <p>Result: {data}</p>
-      </header>
+  
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const name = event.target.name;
+      const value = +event.target.value;
+      setInputs(values => ({...values, [name]: value}))
+    }
+  
+    return (
+      <>
+        <header>
+          <p>Calculator Component</p>
+          <p>Result: {result}</p>
+        </header>
         <form onSubmit={calculate}>
-          <label>first Number : <input name="firstValue" type="number" /></label>
+          <label>First Value: 
+            <input type="number" name="firstValue" value={inputs.firstValue} onInput={handleChange}/>
+          </label>
           <label>Operation : 
             <select name="operation">
-              <option value={ Operations.Multiply }>{ Operations.Multiply }</option>
-              <option value={ Operations.Divide }>{ Operations.Divide }</option>
-              <option value={ Operations.Add }>{ Operations.Add }</option>
-              <option value={ Operations.Subtract }>{ Operations.Subtract }</option>
+              <option value={ Operation.Multiply }>{ Operation.Multiply }</option>
+              <option value={ Operation.Divide }>{ Operation.Divide }</option>
+              <option value={ Operation.Add }>{ Operation.Add }</option>
+              <option value={ Operation.Subtract }>{ Operation.Subtract }</option>
             </select>
           </label>
-          <label>second Number : <input name="secondValue" type="number" /></label>
+          <label>Second Value: 
+            <input type="number" name="secondValue" value={inputs.secondValue} onInput={handleChange}/>
+          </label>
           <button type="submit">Submit</button>
         </form>
-    </div>
-  );
-
+      </>
+    )
 }
 
-export default App;
+export default Calculator;
