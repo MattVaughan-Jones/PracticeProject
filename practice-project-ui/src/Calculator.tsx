@@ -1,9 +1,7 @@
+import Container from '@mui/material/Container';
+import { useState } from 'react';
 import * as React from "react";
 import axios from 'axios';
-import { useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import dotenv from 'dotenv';
-
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
@@ -53,17 +51,25 @@ function Calculator() {
       setInputs(values => ({...values, [name]: value}))
     }
   
-    return (
-      <>
+  return (
+    <>
+      <head>
+        <meta name="viewport" content="initial-scale=1, width=device-width"/>
+      </head>
+      <Container>
         <header>
-          <p>Calculator Component</p>
-          <p>Result: {result}</p>
+          <h1>Calculator Component</h1>
         </header>
+      </Container>
+      <Container>
+        <p>result: {result}</p>
+      </Container>
+      <Container>
         <form onSubmit={calculate}>
-          <label>First Value: 
+          <label>First Value
             <input type="number" name="firstValue" value={inputs.firstValue} onInput={handleChange}/>
           </label>
-          <label>Operation : 
+          <label>Operation
             <select name="operation">
               <option value={ Operation.Multiply }>{ Operation.Multiply }</option>
               <option value={ Operation.Divide }>{ Operation.Divide }</option>
@@ -71,13 +77,14 @@ function Calculator() {
               <option value={ Operation.Subtract }>{ Operation.Subtract }</option>
             </select>
           </label>
-          <label>Second Value: 
+          <label>Second Value
             <input type="number" name="secondValue" value={inputs.secondValue} onInput={handleChange}/>
           </label>
           <button type="submit">Submit</button>
         </form>
-      </>
-    )
+      </Container>
+    </>
+  )
 }
 
 export default Calculator;
