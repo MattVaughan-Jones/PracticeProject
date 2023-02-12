@@ -1,4 +1,7 @@
+import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 import { useState } from 'react';
 import * as React from "react";
 import axios from 'axios';
@@ -58,29 +61,32 @@ function Calculator() {
       </head>
       <Container>
         <header>
-          <h1>Calculator Component</h1>
+          <h1>Calculator</h1>
         </header>
-      </Container>
-      <Container>
         <p>result: {result}</p>
-      </Container>
-      <Container>
         <form onSubmit={calculate}>
-          <label>First Value
-            <input type="number" name="firstValue" value={inputs.firstValue} onInput={handleChange}/>
-          </label>
-          <label>Operation
-            <select name="operation">
-              <option value={ Operation.Multiply }>{ Operation.Multiply }</option>
-              <option value={ Operation.Divide }>{ Operation.Divide }</option>
-              <option value={ Operation.Add }>{ Operation.Add }</option>
-              <option value={ Operation.Subtract }>{ Operation.Subtract }</option>
-            </select>
-          </label>
-          <label>Second Value
-            <input type="number" name="secondValue" value={inputs.secondValue} onInput={handleChange}/>
-          </label>
-          <button type="submit">Submit</button>
+          <TextField label="first number" type="number" name="firstValue" value={inputs.firstValue} onInput={handleChange}/>
+          <TextField
+            select
+            label="Operation"
+            name="operation"
+            defaultValue={Operation.Add}
+          >
+            <MenuItem key={Operation.Multiply} value={Operation.Multiply}>
+              {Operation.Multiply}
+            </MenuItem>
+            <MenuItem key={Operation.Divide} value={Operation.Divide}>
+              {Operation.Divide}
+            </MenuItem>
+            <MenuItem key={Operation.Add} value={Operation.Add}>
+              {Operation.Add}
+            </MenuItem>
+            <MenuItem key={Operation.Subtract} value={Operation.Subtract}>
+              {Operation.Subtract}
+            </MenuItem>
+          </TextField>
+          <TextField label="second number" type="number" name="secondValue" value={inputs.secondValue} onInput={handleChange}/>
+          <Button variant="outlined" type="submit">=</Button>
         </form>
       </Container>
     </>
