@@ -1,7 +1,10 @@
+import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import { useState } from 'react';
 import * as React from "react";
 import axios from 'axios';
@@ -63,30 +66,83 @@ function Calculator() {
         <header>
           <h1>Calculator</h1>
         </header>
-        <p>result: {result}</p>
+        <Box
+          sx={{
+            my: 3,
+            width: '469px',
+            bgcolor: 'grey.100',
+            color: 'grey.800',
+            border: '1px solid',
+            borderRadius: 2,
+            fontSize: '2rem',
+            fontWeight: '700',
+            textAlign: 'center',
+          }}
+        >
+          <p>{result}</p>
+        </Box>
         <form onSubmit={calculate}>
-          <TextField label="first number" type="number" name="firstValue" value={inputs.firstValue} onInput={handleChange}/>
-          <TextField
-            select
-            label="Operation"
-            name="operation"
-            defaultValue={Operation.Add}
+          <Grid 
+            container
+            direction={{ xs: 'column', sm: 'row' }}
+            rowSpacing={{xs: 1, sm: 0}}
+            justifyContent={{xs:'center', sm:'flex-start'}}
+            alignItems='center'
           >
-            <MenuItem key={Operation.Multiply} value={Operation.Multiply}>
-              {Operation.Multiply}
-            </MenuItem>
-            <MenuItem key={Operation.Divide} value={Operation.Divide}>
-              {Operation.Divide}
-            </MenuItem>
-            <MenuItem key={Operation.Add} value={Operation.Add}>
-              {Operation.Add}
-            </MenuItem>
-            <MenuItem key={Operation.Subtract} value={Operation.Subtract}>
-              {Operation.Subtract}
-            </MenuItem>
-          </TextField>
-          <TextField label="second number" type="number" name="secondValue" value={inputs.secondValue} onInput={handleChange}/>
-          <Button variant="outlined" type="submit">=</Button>
+            <Grid item pr={'15px'}>
+              <FormControl>
+                <TextField 
+                  label="first number" 
+                  type="number" 
+                  name="firstValue" 
+                  value={inputs.firstValue} 
+                  onInput={handleChange}
+                  style={{ width: 120}}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item pr={'15px'}>
+              <FormControl>
+                <TextField
+                  select
+                  label="Operation"
+                  name="operation"
+                  defaultValue={Operation.Add}
+                  style={{ width: 120}}
+                >
+                  <MenuItem key={Operation.Multiply} value={Operation.Multiply}>
+                    {Operation.Multiply}
+                  </MenuItem>
+                  <MenuItem key={Operation.Divide} value={Operation.Divide}>
+                    {Operation.Divide}
+                  </MenuItem>
+                  <MenuItem key={Operation.Add} value={Operation.Add}>
+                    {Operation.Add}
+                  </MenuItem>
+                  <MenuItem key={Operation.Subtract} value={Operation.Subtract}>
+                    {Operation.Subtract}
+                  </MenuItem>
+                </TextField>
+              </FormControl>
+            </Grid>
+            <Grid item pr={'15px'}>
+              <FormControl>
+                <TextField 
+                  label="second number" 
+                  type="number" 
+                  name="secondValue" 
+                  value={inputs.secondValue} 
+                  onInput={handleChange}
+                  style={{ width: 120}}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl>
+                <Button sx={{fontSize: 25}} variant="outlined" type="submit">=</Button>
+              </FormControl>
+            </Grid>
+          </Grid>
         </form>
       </Container>
     </>
