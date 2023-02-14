@@ -1,4 +1,3 @@
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import * as ReactDOM from 'react-dom/client';
 import Calculator from './Calculator';
