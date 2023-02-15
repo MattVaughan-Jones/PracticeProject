@@ -1,12 +1,5 @@
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Container from '@mui/material/Container';
-import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import { useState } from 'react';
-import * as React from "react";
+import { FormControl, TextField, Container, MenuItem, Button, Grid, Box } from '@mui/material';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
