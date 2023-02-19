@@ -57,7 +57,6 @@ function Calculator() {
     //validates value against regex: any real number
     const validator = /^-?\d*\.?\d+$/.test(event.target.value);
     
-    //test whether input is valid
     setValid(values => ({...values, [name]: validator}));
   }
   
