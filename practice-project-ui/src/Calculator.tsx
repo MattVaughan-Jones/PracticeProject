@@ -30,7 +30,7 @@ function Calculator() {
 
   const [result, setResult] = React.useState(null);
   const [inputs, setInputs] = useState<Inputs>({firstValue: 0, secondValue: 0});
-  const [valid, setValid] = useState<Valid>({firstValue: false, secondValue: false});
+  const [valid, setValid] = useState<Valid>({firstValue: true, secondValue: true});
 
   async function calculate(event: any) {
     
@@ -108,7 +108,8 @@ function Calculator() {
                   type="number" 
                   name="firstValue" 
                   value={inputs.firstValue}
-                  onChange={(event) => {handleChange(event); handleValidation(event);}}
+                  onChange={handleChange}
+                  onBlur={handleValidation}
                   style={{ width: 120}}
                 />
               </FormControl>
@@ -147,7 +148,8 @@ function Calculator() {
                   type="number" 
                   name="secondValue" 
                   value={inputs.secondValue} 
-                  onChange={(event) => {handleChange(event); handleValidation(event);}}
+                  onChange={handleChange}
+                  onBlur={handleValidation}
                   style={{ width: 120}}
                 />
               </FormControl>
