@@ -16,6 +16,11 @@ type Inputs = {
   secondValue: number
 }
 
+type Valid = {
+  firstValue: boolean,
+  secondValue: boolean
+}
+
 type Calculation = {
   operation: Operation,
   inputs: Inputs
@@ -25,6 +30,7 @@ function Calculator() {
 
   const [result, setResult] = React.useState(null);
   const [inputs, setInputs] = useState<Inputs>({firstValue: 0, secondValue: 0});
+  const [valid, setValid] = useState<Valid>({firstValue: true, secondValue: true});
 
   async function calculate(event: any) {
     
@@ -43,12 +49,22 @@ function Calculator() {
       console.log(error.response);
     }
   }
+
+  const handleValidation = (event: any) => {
+    
+    const name = event.target.name;
+
+    //validates value against regex: any real number
+    const validator = /^-?\d*\.?\d+$/.test(event.target.value);
+    
+    setValid(values => ({...values, [name]: validator}));
+  }
   
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const name = event.target.name;
-      const value = +event.target.value;
-      setInputs(values => ({...values, [name]: value}))
-    }
+  const handleChange = (event: any) => {
+    const name = event.target.name;
+    const value = +event.target.value;
+    setInputs(values => ({...values, [name]: value}))
+  }
   
   return (
     <>
@@ -84,12 +100,15 @@ function Calculator() {
           >
             <Grid item pr={'15px'}>
               <FormControl>
-                <TextField 
+                <TextField
+                  required
+                  error={!valid.firstValue}
                   label="first number" 
                   type="number" 
                   name="firstValue" 
-                  value={inputs.firstValue} 
-                  onInput={handleChange}
+                  value={inputs.firstValue}
+                  onChange={handleChange}
+                  onBlur={handleValidation}
                   style={{ width: 120}}
                 />
               </FormControl>
@@ -97,6 +116,7 @@ function Calculator() {
             <Grid item pr={'15px'}>
               <FormControl>
                 <TextField
+                  required
                   select
                   label="Operation"
                   name="operation"
@@ -121,11 +141,14 @@ function Calculator() {
             <Grid item pr={'15px'}>
               <FormControl>
                 <TextField 
+                  required
+                  error={!valid.secondValue}
                   label="second number" 
                   type="number" 
                   name="secondValue" 
                   value={inputs.secondValue} 
-                  onInput={handleChange}
+                  onChange={handleChange}
+                  onBlur={handleValidation}
                   style={{ width: 120}}
                 />
               </FormControl>
@@ -143,3 +166,4 @@ function Calculator() {
 }
 
 export default Calculator;
+
