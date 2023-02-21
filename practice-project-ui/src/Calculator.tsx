@@ -16,6 +16,13 @@ type Inputs = {
   secondValue: number
 }
 
+type ErrorItem = {
+  location: string,
+  msg: string,
+  param: string,
+  value: string
+}
+
 type Valid = {
   firstValue: boolean,
   secondValue: boolean
@@ -50,16 +57,14 @@ function Calculator() {
       if (error.response) {
         switch(error.response.status) {
           case 400:
-            setErrorsList(error.response.data.errors.map((err: any) => <li>{err.msg}</li>));
+            console.log(error.response.data.errors);
+            setErrorsList(error.response.data.errors.map((err: ErrorItem) => <li>{err.msg}</li>));
           break;
         }
       }
     });
     
   }
-
-  const testArr = ['one', 'two', 'three'];
-  const listArr = testArr.map((elem) => <li>{elem}</li>)
 
   const handleValidation = (event: any) => {
     
