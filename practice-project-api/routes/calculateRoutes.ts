@@ -15,12 +15,7 @@ calculateRoute.post(
   body('inputs.firstValue', 'please enter a number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
   body('inputs.secondValue', 'please enter a number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
   body('operation', 'please select one of the operations from the dropdown').not().isEmpty()
-    .isIn([
-      CalculatorOperation.Multiply,
-      CalculatorOperation.Divide,
-      CalculatorOperation.Add,
-      CalculatorOperation.Subtract
-    ]),
+    .isIn(Object.values(CalculatorOperation)),
   (req: Request, res: Response, next) => {
 
     const errors = validationResult(req);
