@@ -1,3 +1,4 @@
+import { body, validationResult } from 'express-validator';
 import { Router, Request, Response } from "express";
 
 export const calculateRoute = Router();
@@ -9,33 +10,45 @@ enum CalculatorOperation {
   Subtract = '-'
 }
 
-calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
+calculateRoute.post(
+  "/calculate",
+  body('inputs.firstValue', 'please enter a number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
+  body('inputs.secondValue', 'please enter a number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
+  body('operation', 'please select one of the operations from the dropdown').not().isEmpty()
+    .isIn(Object.values(CalculatorOperation)),
+  (req: Request, res: Response, next) => {
 
-  const firstValue = req.body.inputs.firstValue;
-  const secondValue = req.body.inputs.secondValue;
-  const operation = req.body.operation;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  let output;
+    const firstValue = req.body.inputs.firstValue;
+    const secondValue = req.body.inputs.secondValue;
+    const operation = req.body.operation;
 
-  switch (operation) {
-    case CalculatorOperation.Multiply: {
-      output = firstValue * secondValue
-      break;
+    let output;
+
+    switch (operation) {
+      case CalculatorOperation.Multiply: {
+        output = firstValue * secondValue
+        break;
+      }
+      case CalculatorOperation.Divide: {
+        output = firstValue / secondValue
+        break;
+      }
+      case CalculatorOperation.Add: {
+        output = firstValue + secondValue
+        break;
+      }
+      case CalculatorOperation.Subtract: {
+        output = firstValue - secondValue
+        break;
+      }
     }
-    case CalculatorOperation.Divide: {
-      output = firstValue / secondValue
-      break;
-    }
-    case CalculatorOperation.Add: {
-      output = firstValue + secondValue
-      break;
-    }
-    case CalculatorOperation.Subtract: {
-      output = firstValue - secondValue
-      break;
-    }
+
+    res.send({result: output});
+
   }
-
-  res.send({result: output});
-
-});
+);
