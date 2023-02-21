@@ -28,9 +28,10 @@ type Calculation = {
 
 function Calculator() {
 
-  const [result, setResult] = React.useState(null);
+  const [result, setResult] = useState(null);
   const [inputs, setInputs] = useState<Inputs>({firstValue: 0, secondValue: 0});
   const [valid, setValid] = useState<Valid>({firstValue: true, secondValue: true});
+  const [errors, setErrors] = useState(null);
 
   async function calculate(event: any) {
     
@@ -38,16 +39,27 @@ function Calculator() {
 
     const calculation: Calculation = {inputs: inputs, operation: event.target.operation.value};
 
-    try {
-      axios.post(`${baseURL}/calculate`,
-        calculation
-      )
-      .then((response) => {
-        setResult(response.data.result);
-      });
-    } catch (error) {
-      console.log(error.response);
-    }
+    axios.post(`${baseURL}/calculate`,
+      calculation
+    )
+    .then((response) => {
+      if (response) {
+        console.log('remove errors');
+        setErrors(null);
+      }
+      setResult(response.data.result);
+    })
+    .catch((error) => {
+      if (error.response) {
+        switch(error.response.status) {
+          case 400:
+            setErrors(error.response.data.errors[0].msg);
+            console.log(error.response.data.errors[0].msg);
+          break;
+        }
+      }
+    });
+    
   }
 
   const handleValidation = (event: any) => {
@@ -160,6 +172,23 @@ function Calculator() {
             </Grid>
           </Grid>
         </form>
+        
+          {errors &&
+            <Box
+              sx={{
+                my: 3,
+                width: '469px',
+                color: 'red',
+                border: '1px solid',
+                borderRadius: 2,
+                textAlign: 'center',
+              }}
+            >
+              <p>Error</p>
+              <p>{ errors }</p>
+            </Box>
+          }
+        
       </Container>
     </>
   )
