@@ -14,12 +14,11 @@ calculateRoute.post(
   "/calculate",
   body('inputs.firstValue', 'please enter a number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
   body('inputs.secondValue', 'please enter a number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
-  body('operation', 'please select one of the operations from the dropdown').not().isEmpty().isIn(['+', '-', '*', '/']),
+  body('operation', 'please select one of the operations from the dropdown').not().isEmpty().isIn(['-', '*', '/']),
   (req: Request, res: Response, next) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(errors.array());
       return res.status(400).json({ errors: errors.array() });
     }
 

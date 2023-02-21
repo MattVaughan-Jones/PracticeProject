@@ -57,8 +57,11 @@ function Calculator() {
       if (error.response) {
         switch(error.response.status) {
           case 400:
-            console.log(error.response.data.errors);
-            setErrorsList(error.response.data.errors.map((err: ErrorItem) => <li>{err.msg}</li>));
+            setErrorsList(error.response.data.errors.map(
+              (err: ErrorItem) => 
+                <li key={error.response.data.errors.indexOf(err)}>
+                  {err.msg}
+                </li>));
           break;
         }
       }
