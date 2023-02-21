@@ -31,7 +31,7 @@ function Calculator() {
   const [result, setResult] = useState(null);
   const [inputs, setInputs] = useState<Inputs>({firstValue: 0, secondValue: 0});
   const [valid, setValid] = useState<Valid>({firstValue: true, secondValue: true});
-  const [errors, setErrors] = useState(null);
+  const [errorsList, setErrorsList] = useState(null);
 
   async function calculate(event: any) {
     
@@ -43,24 +43,23 @@ function Calculator() {
       calculation
     )
     .then((response) => {
-      if (response) {
-        console.log('remove errors');
-        setErrors(null);
-      }
+      setErrorsList(null);
       setResult(response.data.result);
     })
     .catch((error) => {
       if (error.response) {
         switch(error.response.status) {
           case 400:
-            setErrors(error.response.data.errors[0].msg);
-            console.log(error.response.data.errors[0].msg);
+            setErrorsList(error.response.data.errors.map((err: any) => <li>{err.msg}</li>));
           break;
         }
       }
     });
     
   }
+
+  const testArr = ['one', 'two', 'three'];
+  const listArr = testArr.map((elem) => <li>{elem}</li>)
 
   const handleValidation = (event: any) => {
     
@@ -173,19 +172,19 @@ function Calculator() {
           </Grid>
         </form>
         
-          {errors &&
+          {errorsList &&
             <Box
               sx={{
                 my: 3,
+                px: 1,
                 width: '469px',
                 color: 'red',
                 border: '1px solid',
                 borderRadius: 2,
-                textAlign: 'center',
               }}
             >
               <p>Error</p>
-              <p>{ errors }</p>
+              <ul>{errorsList}</ul>
             </Box>
           }
         
