@@ -1,3 +1,5 @@
+import * as calculationController from '../controllers/calculationController';
+import * as calculatorModel from '../models/calculatorModel';
 import { Router, Request, Response } from "express";
 
 export const calculateRoute = Router();
@@ -36,7 +38,8 @@ calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
     }
   }
 
-  //Add code here to save to a db
+  console.log('attempting to call calculationController');
+  calculationController.create(firstValue, secondValue, operation, output);
 
   res.send({result: output});
 
