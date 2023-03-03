@@ -4,13 +4,6 @@ import { Router, Request, Response } from "express";
 
 export const calculateRoute = Router();
 
-enum CalculatorOperation {
-  Multiply = '*',
-  Divide = '/',
-  Add = '+',
-  Subtract = '-'
-}
-
 calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
 
   const firstValue = req.body.inputs.firstValue;
@@ -38,9 +31,10 @@ calculateRoute.post("/calculate", (req: Request, res: Response, next) => {
     }
   }
 
-  console.log('attempting to call calculationController');
   calculationController.create(firstValue, secondValue, operation, output);
 
-  res.send({result: output});
+  res.send({
+    result: output,
+  });
 
 });

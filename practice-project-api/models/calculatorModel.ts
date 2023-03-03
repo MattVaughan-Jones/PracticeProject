@@ -4,7 +4,7 @@ import { Sequelize, DataTypes, Model } from 'sequelize'
 export class Calculation extends Model {
   declare firstNumber: number;
   declare secondNumber: number;
-  declare operation: string; //TODO: change type to CalculatorOperation
+  declare operation: CalculatorOperation;
   declare result: number;
 }
 
@@ -27,7 +27,6 @@ Calculation.init({
     allowNull: false
   }
 }, {
-  // Other model options go here
   sequelize, // We need to pass the connection instance
   modelName: 'Calculation' // We need to choose the model name
 });

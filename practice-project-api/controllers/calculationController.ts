@@ -1,7 +1,7 @@
 import { Calculation } from '../models/calculatorModel';
 
 // Create and Save a new Tutorial
-export const create = async (firstValue: number, secondValue: number, operation: string, output: number) => {
+export const create = async (firstValue: number, secondValue: number, operation: CalculatorOperation, output: number) => {
     const calculation = Calculation.build({ 
         first_value: firstValue,
         second_value: secondValue,
@@ -10,3 +10,6 @@ export const create = async (firstValue: number, secondValue: number, operation:
     });
     await calculation.save();
 };
+
+// get records of previous calculations
+export const history = async () => await Calculation.findAll();
