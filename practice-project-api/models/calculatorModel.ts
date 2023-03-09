@@ -1,5 +1,5 @@
 import { sequelize } from "./index";
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { DataTypes, Model } from 'sequelize'
 
 export class Calculation extends Model {
   declare firstNumber: number;
@@ -9,7 +9,6 @@ export class Calculation extends Model {
 }
 
 Calculation.init({
-  // Model attributes are defined here
   first_value: {
     type: DataTypes.FLOAT,
     allowNull: false
@@ -27,15 +26,13 @@ Calculation.init({
     allowNull: false
   }
 }, {
-  sequelize, // We need to pass the connection instance
-  modelName: 'Calculation' // We need to choose the model name
+  sequelize,
+  modelName: 'Calculation'
 });
 
-async function synchronise() {
+async () => {
   await Calculation.sync({ alter: true })
-};
-
-synchronise();
+}
 
 // the defined model is the class itself
 console.log(Calculation === sequelize.models.User); // true

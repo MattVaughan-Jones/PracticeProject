@@ -18,7 +18,6 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
   console.log('### authenticate ###');
   sequelize.authenticate().then(async() => {
-    console.log('database connected');
 
     // If need to drop and recreate tables...
     // try {
@@ -26,7 +25,8 @@ app.listen(port, () => {
     // } catch (error: any) {
     //   console.log(error.message);
     // }
-  }).catch((e: any) => {
+  })
+  .catch((e: any) => {
     console.log(e.message);
   })
 });
