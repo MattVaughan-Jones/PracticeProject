@@ -16,7 +16,6 @@ app.get('/', (req: Request, res: Response) => {
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
-  console.log('### authenticate ###');
   sequelize.authenticate().then(async() => {
 
     // If need to drop and recreate tables...
@@ -30,3 +29,5 @@ app.listen(port, () => {
     console.log(e.message);
   })
 });
+
+// if port already in use: lsof -ti tcp:8000 | xargs kill
