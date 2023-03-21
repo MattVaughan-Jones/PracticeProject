@@ -1,6 +1,6 @@
 import { Calculation } from '../models/calculatorModel';
 
-// Create and Save a new Tutorial
+// Create and Save a new Calculation
 export const create = async (firstValue: number, secondValue: number, operation: CalculatorOperation, output: number) => {
     const calculation = Calculation.build({ 
         first_value: firstValue,
