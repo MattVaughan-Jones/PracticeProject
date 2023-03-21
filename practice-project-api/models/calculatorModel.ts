@@ -34,6 +34,3 @@ Calculation.init({
 async () => {
   await Calculation.sync({ alter: true })
 }
-
-// the defined model is the class itself
-console.log(Calculation === sequelize.models.User); // true
