@@ -1,4 +1,4 @@
-const enum CalculatorOperation {
+export enum CalculatorOperation {
     Multiply = '*',
     Divide = '/',
     Add = '+',
