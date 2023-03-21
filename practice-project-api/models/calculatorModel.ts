@@ -1,5 +1,6 @@
-import { sequelize } from "./index";
+import { CalculatorOperation } from '../types';
 import { DataTypes, Model } from 'sequelize'
+import { sequelize } from "./index";
 
 export class Calculation extends Model {
   declare firstNumber: number;
