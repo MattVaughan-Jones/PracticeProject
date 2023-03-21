@@ -16,6 +16,13 @@ type Inputs = {
   secondValue: number
 }
 
+type ErrorItem = {
+  location: string,
+  msg: string,
+  param: string,
+  value: string
+}
+
 type Valid = {
   firstValue: boolean,
   secondValue: boolean
@@ -28,9 +35,10 @@ type Calculation = {
 
 function Calculator() {
 
-  const [result, setResult] = React.useState(null);
+  const [result, setResult] = useState(null);
   const [inputs, setInputs] = useState<Inputs>({firstValue: 0, secondValue: 0});
   const [valid, setValid] = useState<Valid>({firstValue: true, secondValue: true});
+  const [errorsList, setErrorsList] = useState(null);
 
   async function calculate(event: any) {
     
@@ -38,16 +46,27 @@ function Calculator() {
 
     const calculation: Calculation = {inputs: inputs, operation: event.target.operation.value};
 
-    try {
-      axios.post(`${baseURL}/calculate`,
-        calculation
-      )
-      .then((response) => {
-        setResult(response.data.result);
-      });
-    } catch (error) {
-      console.log(error.response);
-    }
+    axios.post(`${baseURL}/calculate`,
+      calculation
+    )
+    .then((response) => {
+      setErrorsList(null);
+      setResult(response.data.result);
+    })
+    .catch((error) => {
+      if (error.response) {
+        switch(error.response.status) {
+          case 400:
+            setErrorsList(error.response.data.errors.map(
+              (err: ErrorItem) => 
+                <li key={error.response.data.errors.indexOf(err)}>
+                  {err.msg}
+                </li>));
+          break;
+        }
+      }
+    });
+    
   }
 
   const handleValidation = (event: any) => {
@@ -160,6 +179,23 @@ function Calculator() {
             </Grid>
           </Grid>
         </form>
+        
+          {errorsList &&
+            <Box
+              sx={{
+                my: 3,
+                px: 1,
+                width: '469px',
+                color: 'red',
+                border: '1px solid',
+                borderRadius: 2,
+              }}
+            >
+              <p>Error</p>
+              <ul>{errorsList}</ul>
+            </Box>
+          }
+        
       </Container>
     </>
   )
