@@ -1,14 +1,9 @@
+import * as calculationController from '../controllers/calculationController';
+import * as calculatorModel from '../models/calculatorModel';
 import { body, validationResult } from 'express-validator';
 import { Router, Request, Response } from "express";
 
 export const calculateRoute = Router();
-
-enum CalculatorOperation {
-  Multiply = '*',
-  Divide = '/',
-  Add = '+',
-  Subtract = '-'
-}
 
 calculateRoute.post(
   "/calculate",
@@ -48,7 +43,11 @@ calculateRoute.post(
       }
     }
 
-    res.send({result: output});
+  calculationController.create(firstValue, secondValue, operation, output);
+
+  res.send({
+    result: output,
+  });
 
   }
 );
