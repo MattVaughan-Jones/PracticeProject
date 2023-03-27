@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { calculateRoute } from './calculateRoutes';
+import {historyRoute } from './historyRoutes';
 import * as bodyParser from 'body-parser';
 
 export const routes = Router();
@@ -13,6 +14,6 @@ routes.use(function(req, res, next) {
     next();
 });
 
-routes.use(calculateRoute);
+routes.use(calculateRoute, historyRoute);
 
 // if error: lsof -i tcp:8000 | awk 'NR!=1 {print $2}' | xargs kill
