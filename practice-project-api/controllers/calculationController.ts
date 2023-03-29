@@ -11,6 +11,3 @@ export const create = async (firstValue: number, secondValue: number, operation:
     });
     await calculation.save();
 };
-
-// get records of previous calculations
-export const history = async () => await Calculation.findAll();

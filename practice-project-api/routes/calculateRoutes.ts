@@ -8,8 +8,8 @@ export const calculateRoute = Router();
 
 calculateRoute.post(
   "/calculate",
-  body('inputs.firstValue', 'please enter a number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
-  body('inputs.secondValue', 'please enter a number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
+  body('values.firstValue', 'please enter a first number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
+  body('values.secondValue', 'please enter a second number').not().isEmpty().matches(/^-?\d*\.?\d+$/),
   body('operation', 'please select one of the operations from the dropdown').not().isEmpty()
     .isIn(Object.values(CalculatorOperation)),
   (req: Request, res: Response, next) => {
@@ -19,8 +19,8 @@ calculateRoute.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const firstValue = req.body.inputs.firstValue;
-    const secondValue = req.body.inputs.secondValue;
+    const firstValue = req.body.values.firstValue;
+    const secondValue = req.body.values.secondValue;
     const operation = req.body.operation;
 
     let output;

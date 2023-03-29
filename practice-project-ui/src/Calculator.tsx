@@ -1,42 +1,14 @@
 import { FormControl, TextField, Container, MenuItem, Button, Grid, Box } from '@mui/material';
+import { Operation, inputValues, Valid, CalculationInput, ErrorItem } from './types';
 import React, { useState } from 'react';
 import axios from 'axios';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
-enum Operation {
-  Add = "+",
-  Subtract = "-",
-  Multiply = "*",
-  Divide = "/"
-};
-
-type Inputs = {
-  firstValue: number,
-  secondValue: number
-}
-
-type ErrorItem = {
-  location: string,
-  msg: string,
-  param: string,
-  value: string
-}
-
-type Valid = {
-  firstValue: boolean,
-  secondValue: boolean
-}
-
-type Calculation = {
-  operation: Operation,
-  inputs: Inputs
-}
-
 function Calculator() {
 
   const [result, setResult] = useState(null);
-  const [inputs, setInputs] = useState<Inputs>({firstValue: 0, secondValue: 0});
+  const [inputs, setInputs] = useState<inputValues>({firstValue: 0, secondValue: 0});
   const [valid, setValid] = useState<Valid>({firstValue: true, secondValue: true});
   const [errorsList, setErrorsList] = useState(null);
 
@@ -44,7 +16,7 @@ function Calculator() {
     
     event.preventDefault();
 
-    const calculation: Calculation = {inputs: inputs, operation: event.target.operation.value};
+    const calculation: CalculationInput = {values: inputs, operation: event.target.operation.value};
 
     axios.post(`${baseURL}/calculate`,
       calculation
@@ -61,7 +33,8 @@ function Calculator() {
               (err: ErrorItem) => 
                 <li key={error.response.data.errors.indexOf(err)}>
                   {err.msg}
-                </li>));
+                </li>
+            ));
           break;
         }
       }
