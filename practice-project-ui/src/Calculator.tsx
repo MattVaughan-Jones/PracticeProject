@@ -39,7 +39,7 @@ function Calculator() {
         }
       }
     });
-    
+
   }
 
   const handleValidation = (event: any) => {
