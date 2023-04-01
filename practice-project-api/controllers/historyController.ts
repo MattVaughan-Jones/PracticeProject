@@ -6,14 +6,15 @@ export const history = async function(req: any) {
 
     let history: Calculation[];
 
-    if (Object.values(CalculatorOperation).includes(req.query.filter.operation)) {
+    console.log('operation below ==========');
+    console.log(req.query);
 
-        console.log()
+    if (Object.values(CalculatorOperation).includes(req.query.filter)) {
 
         history = await Calculation.findAll({
             limit: 10,
             where: {
-                operation: req.query.filter.operation
+                operation: req.query.filter
             },
             order: [ [ 'createdAt', 'DESC' ]]
         });
