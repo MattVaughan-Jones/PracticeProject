@@ -17,17 +17,16 @@ app.get('/', (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
   sequelize.authenticate().then(async() => {
-
-    // If need to drop and recreate tables...
-    // try {
-    //   await sequelize.sync();
-    // } catch (error: any) {
-    //   console.log(error.message);
-    // }
   })
   .catch((e: any) => {
     console.log(e.message);
   })
 });
 
-// if port already in use: lsof -ti tcp:8000 | xargs kill
+/*******************************
+*
+* USEFUL SCRIPTS
+*
+* if port already in use: lsof -ti tcp:8000 | xargs kill
+* or: lsof -i tcp:8000 | awk 'NR!=1 {print $2}' | xargs kill
+*******************************/

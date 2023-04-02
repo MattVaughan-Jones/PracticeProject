@@ -1,42 +1,14 @@
 import { FormControl, TextField, Container, MenuItem, Button, Grid, Box } from '@mui/material';
+import { Operation, InputValues, Valid, CalculationInput, ErrorItem } from './types';
 import React, { useState } from 'react';
 import axios from 'axios';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
-enum Operation {
-  Add = "+",
-  Subtract = "-",
-  Multiply = "*",
-  Divide = "/"
-};
-
-type Inputs = {
-  firstValue: number,
-  secondValue: number
-}
-
-type ErrorItem = {
-  location: string,
-  msg: string,
-  param: string,
-  value: string
-}
-
-type Valid = {
-  firstValue: boolean,
-  secondValue: boolean
-}
-
-type Calculation = {
-  operation: Operation,
-  inputs: Inputs
-}
-
 function Calculator() {
 
   const [result, setResult] = useState(null);
-  const [inputs, setInputs] = useState<Inputs>({firstValue: 0, secondValue: 0});
+  const [inputs, setInputs] = useState<InputValues>({firstValue: 0, secondValue: 0});
   const [valid, setValid] = useState<Valid>({firstValue: true, secondValue: true});
   const [errorsList, setErrorsList] = useState(null);
 
@@ -44,7 +16,7 @@ function Calculator() {
     
     event.preventDefault();
 
-    const calculation: Calculation = {inputs: inputs, operation: event.target.operation.value};
+    const calculation: CalculationInput = {values: inputs, operation: event.target.operation.value};
 
     axios.post(`${baseURL}/calculate`,
       calculation
@@ -61,12 +33,13 @@ function Calculator() {
               (err: ErrorItem) => 
                 <li key={error.response.data.errors.indexOf(err)}>
                   {err.msg}
-                </li>));
+                </li>
+            ));
           break;
         }
       }
     });
-    
+
   }
 
   const handleValidation = (event: any) => {
@@ -79,7 +52,7 @@ function Calculator() {
     setValid(values => ({...values, [name]: validator}));
   }
   
-  const handleChange = (event: any) => {
+  const handleNumberChange = (event: any) => {
     const name = event.target.name;
     const value = +event.target.value;
     setInputs(values => ({...values, [name]: value}))
@@ -87,9 +60,6 @@ function Calculator() {
   
   return (
     <>
-      <head>
-        <meta name="viewport" content="initial-scale=1, width=device-width"/>
-      </head>
       <Container>
         <header>
           <h1>Calculator</h1>
@@ -126,7 +96,7 @@ function Calculator() {
                   type="number" 
                   name="firstValue" 
                   value={inputs.firstValue}
-                  onChange={handleChange}
+                  onChange={handleNumberChange}
                   onBlur={handleValidation}
                   style={{ width: 120}}
                 />
@@ -166,7 +136,7 @@ function Calculator() {
                   type="number" 
                   name="secondValue" 
                   value={inputs.secondValue} 
-                  onChange={handleChange}
+                  onChange={handleNumberChange}
                   onBlur={handleValidation}
                   style={{ width: 120}}
                 />
