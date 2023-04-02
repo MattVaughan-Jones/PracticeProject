@@ -1,5 +1,5 @@
 import { FormControl, TextField, Container, MenuItem, Button, Grid, Box } from '@mui/material';
-import { Operation, inputValues, Valid, CalculationInput, ErrorItem } from './types';
+import { Operation, InputValues, Valid, CalculationInput, ErrorItem } from './types';
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ const baseURL = process.env.REACT_APP_BASE_URL;
 function Calculator() {
 
   const [result, setResult] = useState(null);
-  const [inputs, setInputs] = useState<inputValues>({firstValue: 0, secondValue: 0});
+  const [inputs, setInputs] = useState<InputValues>({firstValue: 0, secondValue: 0});
   const [valid, setValid] = useState<Valid>({firstValue: true, secondValue: true});
   const [errorsList, setErrorsList] = useState(null);
 

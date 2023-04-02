@@ -15,7 +15,7 @@ export enum Operation {
     Divide = "/"
 };
 
-export type inputValues = {
+export type InputValues = {
     firstValue: number,
     secondValue: number
 }
@@ -34,5 +34,5 @@ export type Valid = {
 
 export type CalculationInput = {
     operation: Operation,
-    values: inputValues
+    values: InputValues
 }
