@@ -1,18 +1,20 @@
 import { Calculation } from '../models/calculatorModel';
 import { CalculatorOperation } from '../types';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+let limit: number = +process.env.HISTORY_LENGTH;
 
 // get records of previous calculations
 export const history = async function(req: any) {
 
     let history: Calculation[];
 
-    console.log('operation below ==========');
-    console.log(req.query);
-
     if (Object.values(CalculatorOperation).includes(req.query.filter)) {
 
         history = await Calculation.findAll({
-            limit: 10,
+            limit: limit,
             where: {
                 operation: req.query.filter
             },
@@ -22,7 +24,7 @@ export const history = async function(req: any) {
     } else {
 
         history = await Calculation.findAll({
-            limit: 10,
+            limit: limit,
             order: [ [ 'createdAt', 'DESC' ]]
         });
 

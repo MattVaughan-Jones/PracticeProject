@@ -10,8 +10,11 @@ function History() {
   const [historyList, setHistoryList] = useState([null]);
   const [operationFilter, setOperationFilter] = useState('all');
 
-  useEffect(() => {
+  //Every time the operationFilter state changes, retreive the history again from the server
+  // eslint-disable-next-line
+  useEffect(() => {getHistory()},[operationFilter]);
 
+  function getHistory() {
     axios.get(`${baseURL}/history`, {
       params: {
         filter: operationFilter
@@ -30,18 +33,14 @@ function History() {
     .catch((error) => {
       console.log(error);
     })
+  }
 
-  },
-  [operationFilter]
-  );
-
+  //resets index used in to provide a key to each item rendered in the history list
+  //https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key
   let historyListIndex: number = null;
 
   return (
     <>
-      <head>
-        <meta name="viewport" content="initial-scale=1, width=device-width"/>
-      </head>
       <Container sx={{mt: 10}}>
         <header>
           <small>10 most recent calculations</small>

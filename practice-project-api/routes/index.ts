@@ -15,5 +15,3 @@ routes.use(function(req, res, next) {
 });
 
 routes.use(calculateRoute, historyRoute);
-
-// if error: lsof -i tcp:8000 | awk 'NR!=1 {print $2}' | xargs kill

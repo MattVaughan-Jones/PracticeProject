@@ -15,14 +15,6 @@ export enum Operation {
     Divide = "/"
 };
 
-export enum OperationFilter {
-    None = "none",
-    Add = "+",
-    Subtract = "-",
-    Multiply = "*",
-    Divide = "/"
-};
-
 export type inputValues = {
     firstValue: number,
     secondValue: number

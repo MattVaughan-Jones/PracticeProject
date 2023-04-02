@@ -52,7 +52,7 @@ function Calculator() {
     setValid(values => ({...values, [name]: validator}));
   }
   
-  const handleChange = (event: any) => {
+  const handleNumberChange = (event: any) => {
     const name = event.target.name;
     const value = +event.target.value;
     setInputs(values => ({...values, [name]: value}))
@@ -60,9 +60,6 @@ function Calculator() {
   
   return (
     <>
-      <head>
-        <meta name="viewport" content="initial-scale=1, width=device-width"/>
-      </head>
       <Container>
         <header>
           <h1>Calculator</h1>
@@ -99,7 +96,7 @@ function Calculator() {
                   type="number" 
                   name="firstValue" 
                   value={inputs.firstValue}
-                  onChange={handleChange}
+                  onChange={handleNumberChange}
                   onBlur={handleValidation}
                   style={{ width: 120}}
                 />
@@ -139,7 +136,7 @@ function Calculator() {
                   type="number" 
                   name="secondValue" 
                   value={inputs.secondValue} 
-                  onChange={handleChange}
+                  onChange={handleNumberChange}
                   onBlur={handleValidation}
                   style={{ width: 120}}
                 />
